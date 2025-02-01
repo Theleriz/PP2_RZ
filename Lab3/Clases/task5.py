@@ -1,3 +1,6 @@
+import math
+
+
 class PrimeList:
     def __primary(self, x):
         div = []

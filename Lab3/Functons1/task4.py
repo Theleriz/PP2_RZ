@@ -10,7 +10,6 @@ def isPrime(x: int) -> bool:
 
 
 def filter_prime(lst:list) -> list:
-    """this function for task 4"""
     answerList = []
     lstBool = []
     j = 0

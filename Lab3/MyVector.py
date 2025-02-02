@@ -1,12 +1,8 @@
 import math
 
-def gramsToOunces(grams):
-    ounces = 28.3495231 * grams
-    return ounces
-
 
 class Vector:
-    def __init__(self, x, y):
+    def __init__(self, x: float = 0, y: float = 0):
         self.x = x
         self.y = y
     
@@ -61,12 +57,3 @@ class Vector:
 
 EX = Vector(1, 0)
 EY = Vector(0, 1)    
-
-
-
-    
-
-
-
-
-

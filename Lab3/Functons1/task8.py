@@ -12,4 +12,3 @@ def spy_game(lst: list) -> list:
                 zero_order += 1
     return False
 
-print(spy_game([0, 7, 0, 0]))

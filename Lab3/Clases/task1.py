@@ -1,5 +1,4 @@
 class Console:
-    """first class of task"""
     string = ''
 
     def getString(self):

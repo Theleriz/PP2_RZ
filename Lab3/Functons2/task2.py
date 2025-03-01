@@ -1,4 +1,4 @@
-from task1 import goodMovie
+from Lab6.builtIN.task1 import goodMovie
 
 
 def sublist(moviess):

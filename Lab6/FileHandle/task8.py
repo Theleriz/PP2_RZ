@@ -7,6 +7,5 @@ def delete(path):
             print(f"File '{path}' deleted.")
         else:
             print(f"Cannot delete '{path}'.")
-    else:
-        print(f"File '{path}'is not exist.")
+
 

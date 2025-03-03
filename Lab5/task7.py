@@ -1,4 +1,5 @@
 import re
 def snakeToCamel(string):
     words = string.split('_')
-    return words[0] + ''.join(word.capitalize() for word in words[1:])
+    finalWord = words[0] + ''.join(i.capitalize() for i in words[1:])
+    return finalWord

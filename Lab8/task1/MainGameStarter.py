@@ -1,7 +1,7 @@
-#Imports
 #File must be executed in dir where placed task 
 #in the terminal use cd .\Lab8\task1
 #then you can start game
+
 import pygame, sys
 from pygame.locals import *
 import random, time
@@ -11,7 +11,7 @@ pygame.init()
 
  
 FPS = 60
-FramePerSec = pygame.time.Clock()
+TickController = pygame.time.Clock() #to control ticks in the game, it's depend as reverse qudradic rule
 
 BLUE  = (0, 0, 255)
 RED   = (255, 0, 0)
@@ -25,7 +25,7 @@ SCREEN_HEIGHT = 600
 
 SPEED = 5
 PLAYER_SPEED = 5
-SCORE = 10
+SCORE = 100
 COIN = 0
 # GEAR = 1 
 # GEAR_BOX = [4, 4, 6, 8, 10, 12]
@@ -40,8 +40,8 @@ you_win = font.render("You Win", True, BLACK) #masssage "You win"
 background = pygame.image.load("AnimatedStreet.png")
 
 
-DISPLAYSURF = pygame.display.set_mode((400,600))
-DISPLAYSURF.fill(WHITE)
+SCREEN = pygame.display.set_mode((400,600))
+SCREEN.fill(WHITE)
 pygame.display.set_caption("Car Crush")
 
 
@@ -72,8 +72,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.center = (160, 520)
        
     # def gearBox(self, GEAR_KEY):
-    #     global PLAYER_SPEED
-    #     global GEAR
+    #     glbuff_coinal PLAYER_SPEED
+    #     glbuff_coinal GEAR
     #     if GEAR_KEY == "shift-up" and GEAR >= 1 and GEAR < 5:
     #         GEAR += 1
     #         PLAYER_SPEED = GEAR_BOX[GEAR]
@@ -135,25 +135,27 @@ class TextDisplayer():
         super().__init__()
 
     def Print(self, text, text_position: tuple, text_color: tuple = BLACK, bg_color:tuple = WHITE):
-        DISPLAYSURF.fill(bg_color)
-        DISPLAYSURF.blit(font.render(text, True, text_color),  text_position)
+        SCREEN.fill(bg_color)
+        SCREEN.blit(font.render(text, True, text_color),  text_position)
 
 
         
 
 Player = Player()
-Car_Enemy = Enemy()
+car_enemy = Enemy()
+bob_enemy = Enemy()
 text = TextDisplayer()
-OB = BuffCoin()
+buff_coin = BuffCoin()
 buffers_sprites = pygame.sprite.Group()
-buffers_sprites.add(OB)
+buffers_sprites.add(buff_coin)
 
 
 enemies = pygame.sprite.Group()
-enemies.add(Car_Enemy)
+enemies.add(car_enemy)
+enemies.add(bob_enemy)
 all_sprites = pygame.sprite.Group()
 all_sprites.add(Player)
-all_sprites.add(Car_Enemy)
+all_sprites.add(car_enemy)
 
 
 INC_SPEED = pygame.USEREVENT + 1
@@ -172,31 +174,32 @@ while True:
     pygame.display.update()
 
 
-    DISPLAYSURF.blit(background, (0,0))
+    SCREEN.blit(background, (0,0))
     scores = font_small.render(f"CAR: {str(SCORE)}", True, BLACK)
     coin = font_small.render(f"COIN: {str(COIN)}", True, BLACK)
-    DISPLAYSURF.blit(scores, (10,10))
-    DISPLAYSURF.blit(coin, (SCREEN_WIDTH - 100,10))
+    SCREEN.blit(scores, (10,10))
+    SCREEN.blit(coin, (SCREEN_WIDTH - 100,10))
 
     if random.randint(1, 50) == 1:
-       all_sprites.add(OB)
+       all_sprites.add(buff_coin)
 
     for entity in all_sprites:
         entity.move()
-        DISPLAYSURF.blit(entity.image, entity.rect)
+        SCREEN.blit(entity.image, entity.rect)
 
     if pygame.sprite.spritecollideany(Player, buffers_sprites) and not isBuffed:
-        OB.getBuff()
+        #check colaidor with coins
+        buff_coin.getBuff()
         isBuffed = False
         COIN += 1
-        OB.spawn()    
+        buff_coin.spawn()    
 
     if pygame.sprite.spritecollideany(Player, enemies):
-
+        #check crash with another car
         time.sleep(1)
                    
-        DISPLAYSURF.fill(RED)
-        DISPLAYSURF.blit(game_over, (30,250))
+        SCREEN.fill(RED)
+        SCREEN.blit(game_over, (30,250))
           
         pygame.display.update()
         for entity in all_sprites:
@@ -204,17 +207,8 @@ while True:
         time.sleep(2)
         pygame.quit()
         sys.exit()
-    
-    
-
-    if SCORE == 97:
-        PLAYER_SPEED = 10
-        time.sleep(0.5)
-        text.Print("SPEED UP", (40, 250), BLACK, BLUE)
-        pygame.display.update()
-        
-
-
+   
+   
     if SCORE == 0:
         time.sleep(1)
         text.Print("YOU WIN", (50, 250), BLACK, GREEN)
@@ -227,4 +221,4 @@ while True:
         sys.exit()    
         
     pygame.display.update()
-    FramePerSec.tick(FPS)
+    TickController.tick(FPS)

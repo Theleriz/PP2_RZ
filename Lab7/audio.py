@@ -20,8 +20,11 @@ pygame.mixer.music.play()
 while runtime:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            runtime = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
 
+        #exchange to keydown
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_ESCAPE]:

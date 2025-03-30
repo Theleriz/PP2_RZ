@@ -30,7 +30,6 @@ background = pygame.image.load("AnimatedStreet.png")
 
 
 DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-from classes import *
 DISPLAYSURF.fill(WHITE)
 pygame.display.set_caption("Game")
 

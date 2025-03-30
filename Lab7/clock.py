@@ -42,4 +42,6 @@ while not done:
 
     clock.tick(60)
 
+
+#исправить угол между руками синхрон. время 
 pygame.quit()

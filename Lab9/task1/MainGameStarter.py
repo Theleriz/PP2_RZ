@@ -207,6 +207,12 @@ while True:
         sys.exit()
     
     
+    if COIN >= 20 and COIN <= 30:
+        SPEED = 10
+    elif COIN >= 40 and COIN <= 50:
+        SPEED = 15
+    elif COIN >= 60 and COIN <= 70:
+        SPEED = 20
 
     if SCORE == 97:
         PLAYER_SPEED = 10
@@ -214,7 +220,6 @@ while True:
         text.Print("SPEED UP", (40, 250), BLACK, BLUE)
         pygame.display.update()
         
-
 
     if SCORE == 0:
         time.sleep(1)

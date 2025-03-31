@@ -7,9 +7,9 @@ def main():
     
     radius = 15
     mode = 'blue'
-    drawing_mode = 'brush'  # brush, eraser, rect, circle
+    drawing_mode = 'drawing' 
     points = []
-    shapes = []  # Нарисованные фигуры
+    shapes = []  
     rect_start = None
     circle_start = None
 
@@ -29,20 +29,20 @@ def main():
                 if event.key == pygame.K_ESCAPE:
                     return
 
-                # Изменение цвета
+                #color change
                 if event.key == pygame.K_r:
                     mode = 'red'
-                    drawing_mode = 'brush'
+                    drawing_mode = 'drawing'
                 elif event.key == pygame.K_g:
                     mode = 'green'
-                    drawing_mode = 'brush'
+                    drawing_mode = 'drawing'
                 elif event.key == pygame.K_b:
                     mode = 'blue'
-                    drawing_mode = 'brush'
+                    drawing_mode = 'drawing'
                 elif event.key == pygame.K_e:
-                    drawing_mode = 'eraser'  # Ластик
+                    drawing_mode = 'eraser'  
 
-                # Инструменты
+                #choose shape
                 elif event.key == pygame.K_t:
                     drawing_mode = 'rect'
                     rect_start = None
@@ -51,16 +51,16 @@ def main():
                     circle_start = None
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:  # ЛКМ - начало рисования
-                    if drawing_mode == 'brush' or drawing_mode == 'eraser':
+                if event.button == 1:  
+                    if drawing_mode == 'drawing' or drawing_mode == 'eraser':
                         radius = min(200, radius + 1)
                     elif drawing_mode == 'rect':
                         rect_start = event.pos
                     elif drawing_mode == 'circle':
                         circle_start = event.pos
 
-                elif event.button == 3:  # ПКМ - завершение рисования фигуры
-                    if drawing_mode == 'brush' or drawing_mode == 'eraser':
+                elif event.button == 3:
+                    if drawing_mode == 'drawing' or drawing_mode == 'eraser':
                         radius = max(1, radius - 1)
                     elif drawing_mode == 'rect' and rect_start:
                         shapes.append(("rect", rect_start, pygame.mouse.get_pos(), mode))
@@ -68,17 +68,17 @@ def main():
                     elif drawing_mode == 'circle' and circle_start:
                         shapes.append(("circle", circle_start, pygame.mouse.get_pos(), mode))
                         circle_start = None
-                    drawing_mode = 'brush'  # Возвращение кисти после фигуры
+                    drawing_mode = 'drawing' 
 
             if event.type == pygame.MOUSEMOTION:
-                if drawing_mode == 'brush' or drawing_mode == 'eraser':
+                if drawing_mode == 'drawing' or drawing_mode == 'eraser':
                     position = event.pos
-                    points.append((position, mode if drawing_mode == 'brush' else 'eraser'))
+                    points.append((position, mode if drawing_mode == 'drawing' else 'eraser'))
                     points = points[-256:]
 
         screen.fill((0, 0, 0))
 
-        # Рисуем кистью и ластиком
+        #draw with 
         for i in range(len(points) - 1):
             drawLineBetween(screen, i, points[i][0], points[i + 1][0], radius, points[i][1])
 
@@ -88,12 +88,12 @@ def main():
             elif shape[0] == "circle":
                 drawCircle(screen, shape[1], shape[2], shape[3])
 
-        # Отображение прямоугольника
+        #draw rectangle
         if drawing_mode == 'rect' and rect_start:
             mouse_pos = pygame.mouse.get_pos()
             pygame.draw.rect(screen, get_color(mode), (*rect_start, mouse_pos[0] - rect_start[0], mouse_pos[1] - rect_start[1]), 2)
 
-        # Отображение круга
+        #draw cicle
         if drawing_mode == 'circle' and circle_start:
             mouse_pos = pygame.mouse.get_pos()
             radius = int(((mouse_pos[0] - circle_start[0]) ** 2 + (mouse_pos[1] - circle_start[1]) ** 2) ** 0.5)
@@ -148,10 +148,3 @@ def get_color(mode):
 
 
 main()
-
-#R, G, B — смена цвета
-#E — ластик
-#C — круг
-#Т — прямоугольник
-#ЛКМ — увеличение радиуса
-#ПКМ — уменьшение радиуса

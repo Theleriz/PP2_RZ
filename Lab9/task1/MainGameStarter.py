@@ -25,7 +25,7 @@ SCREEN_HEIGHT = 600
 
 SPEED = 5
 PLAYER_SPEED = 5
-SCORE = 10
+SCORE = 5
 COIN = 0
 # GEAR = 1 
 # GEAR_BOX = [4, 4, 6, 8, 10, 12]
@@ -102,7 +102,8 @@ class Player(pygame.sprite.Sprite):
 class BuffCoin(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("BuffCoin.png")
+        self.image = pygame.image.load("BuffCoin2.png")
+        self.image = pygame.transform.scale(self.image, (50, 50))
         self.rect = self.image.get_rect()
         self.rect.center = (random.randint(40,SCREEN_WIDTH-40), 0)
         
@@ -214,12 +215,6 @@ while True:
     elif COIN >= 60 and COIN <= 70:
         SPEED = 20
 
-    if SCORE == 97:
-        PLAYER_SPEED = 10
-        time.sleep(0.5)
-        text.Print("SPEED UP", (40, 250), BLACK, BLUE)
-        pygame.display.update()
-        
 
     if SCORE == 0:
         time.sleep(1)
